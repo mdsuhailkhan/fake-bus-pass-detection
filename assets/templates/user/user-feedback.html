@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Fake Bus Pass Detection</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <link href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmSVE45lKO-bJ7cHIbOBtfB62nmvpaaugQ2LO7F-ba&s" rel="icon">
+
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="{% static 'main/lib/animate/animate.min.css' %}" rel="stylesheet">
+    <link href="{% static 'main/lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="{% static 'main/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="{% static 'main/css/style.css' %}" rel="stylesheet">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <style>
+        /* ******************************************************
+	Author URI: https://codeconvey.com/
+	Demo Purpose Only - May not require to add.
+	font-family: "Raleway",sans-serif;
+*********************************************************/
+
+        @import url('https://fonts.googleapis.com/css?family=Raleway:400,500,600,700,800,900');
+
+
+
+       
+
+        
+
+        a:hover,
+        a:focus {
+            color: #373e18;
+        }
+
+        section {
+            float: left;
+            width: 100%;
+            padding-bottom: 3em;
+        }
+
+        h2 {
+            color: #1a0e0e;
+            font-size: 26px;
+            font-weight: 700;
+            margin: 0;
+            line-height: normal;
+            text-transform: uppercase;
+        }
+
+        h2 span {
+            display: block;
+            padding: 0;
+            font-size: 18px;
+            opacity: 0.7;
+            margin-top: 5px;
+            text-transform: uppercase;
+        }
+
+        #float-right {
+            float: right;
+        }
+
+        /* ******************************************************
+	Script Top
+*********************************************************/
+
+        
+
+        /* ******************************************************
+	Script Header
+*********************************************************/
+
+        
+       
+
+        
+
+        
+
+
+
+
+        /* ******************************************************
+	Live Demo
+*********************************************************/
+
+
+
+
+
+        /* ******************************************************
+	Responsive Grids
+*********************************************************/
+
+        
+
+       
+
+
+        
+
+        
+        @media only screen and (min-width:240px) and (max-width: 768px) {
+
+            
+
+
+            
+            
+        }
+
+
+
+        
+        .star-rating {
+            margin: 25px 0 0px;
+            font-size: 0;
+            white-space: nowrap;
+            display: inline-block;
+            width: 175px;
+            height: 35px;
+            overflow: hidden;
+            position: relative;
+            background: url('data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMjBweCIgaGVpZ2h0PSIyMHB4IiB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj48cG9seWdvbiBmaWxsPSIjREREREREIiBwb2ludHM9IjEwLDAgMTMuMDksNi41ODMgMjAsNy42MzkgMTUsMTIuNzY0IDE2LjE4LDIwIDEwLDE2LjU4MyAzLjgyLDIwIDUsMTIuNzY0IDAsNy42MzkgNi45MSw2LjU4MyAiLz48L3N2Zz4=');
+            background-size: contain;
+        }
+
+        .star-rating i {
+            opacity: 0;
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 20%;
+            z-index: 1;
+            background: url('data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMjBweCIgaGVpZ2h0PSIyMHB4IiB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj48cG9seWdvbiBmaWxsPSIjRkZERjg4IiBwb2ludHM9IjEwLDAgMTMuMDksNi41ODMgMjAsNy42MzkgMTUsMTIuNzY0IDE2LjE4LDIwIDEwLDE2LjU4MyAzLjgyLDIwIDUsMTIuNzY0IDAsNy42MzkgNi45MSw2LjU4MyAiLz48L3N2Zz4=');
+            background-size: contain;
+        }
+
+        .star-rating input {
+            
+            
+            opacity: 0;
+            display: inline-block;
+            width: 20%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            z-index: 2;
+            position: relative;
+        }
+
+        .star-rating input:hover+i,
+        .star-rating input:checked+i {
+            opacity: 1;
+        }
+
+        .star-rating i~i {
+            width: 40%;
+        }
+
+        .star-rating i~i~i {
+            width: 60%;
+        }
+
+        .star-rating i~i~i~i {
+            width: 80%;
+        }
+
+        .star-rating i~i~i~i~i {
+            width: 100%;
+        }
+
+        .choice {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            text-align: center;
+            padding: 20px;
+            display: block;
+        }
+
+        span.scale-rating {
+            margin: 5px 0 15px;
+            display: inline-block;
+
+            width: 100%;
+
+        }
+
+        span.scale-rating>label {
+            position: relative;
+           
+            outline: 0 !important;
+            border: 1px solid grey;
+            height: 33px;
+            margin: 0 5px 0 0;
+            width: calc(10% - 7px);
+            float: left;
+            cursor: pointer;
+        }
+
+        span.scale-rating label {
+            position: relative;
+            
+            outline: 0 !important;
+            height: 33px;
+
+            margin: 0 5px 0 0;
+            width: calc(10% - 7px);
+            float: left;
+            cursor: pointer;
+        }
+
+        span.scale-rating input[type=radio] {
+            position: absolute;
+           
+            opacity: 0;
+            outline: 0 !important;
+            /*border-right: 1px solid grey;*/
+            height: 33px;
+
+            margin: 0 5px 0 0;
+
+            width: 100%;
+            float: left;
+            cursor: pointer;
+            z-index: 3;
+        }
+
+        span.scale-rating label:hover {
+            background: #fddf8d;
+        }
+
+        span.scale-rating input[type=radio]:last-child {
+            border-right: 0;
+        }
+
+        span.scale-rating label input[type=radio]:checked~label {
+            
+
+            margin: 0;
+            background: #fddf8d;
+        }
+
+        span.scale-rating label:before {
+            content: attr(value);
+            top: 7px;
+            width: 100%;
+            position: absolute;
+            left: 0;
+            right: 0;
+            text-align: center;
+            vertical-align: middle;
+            z-index: 2;
+        }
+    </style>
+
+<script type = "text/JavaScript">
+    function lion(){
+        var suggestions = document.myform.commentText
+
+        if (suggestions.value == ""){
+            alert("enter the suggestions")
+            suggestions.focus()
+            return false
+        }
+        return true
+}
+</script>
+</head>
+<body>
+
+    <!-- Spinner Start -->
+    <div id="spinner"
+        class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-grow text-primary" role="status"></div>
+    </div>
+    <!-- Spinner End -->
+
+
+    <!-- Topbar Start -->
+    <div class="container-fluid bg-dark text-light p-0">
+        <div class="row gx-0 d-none d-lg-flex">
+            <div class="col-lg-7 px-5 text-start">
+                <div class="h-100 d-inline-flex align-items-center me-4">
+                    <small class="fa fa-map-marker-alt text-primary me-2"></small>
+                    <small>LB Nagar, Metro Station, HYD
+                    </small>
+                </div>
+                <div class="h-100 d-inline-flex align-items-center">
+                    <small class="far fa-clock text-primary me-2"></small>
+                    <small>Mon - Fri : 09.00 AM - 09.00 PM</small>
+                </div>
+            </div>
+            <div class="col-lg-5 px-5 text-end">
+                <div class="h-100 d-inline-flex align-items-center me-4">
+                    <small class="fa fa-phone-alt text-primary me-2"></small>
+                    <small>+012 345 6789</small>
+                </div>
+                <div class="h-100 d-inline-flex align-items-center mx-n2">
+                    <a class="btn btn-square btn-link rounded-0 border-0 border-end border-secondary" href=""><i
+                            class="fab fa-facebook-f"></i></a>
+                    <a class="btn btn-square btn-link rounded-0 border-0 border-end border-secondary" href=""><i
+                            class="fab fa-twitter"></i></a>
+                    <a class="btn btn-square btn-link rounded-0 border-0 border-end border-secondary" href=""><i
+                            class="fab fa-linkedin-in"></i></a>
+                    <a class="btn btn-square btn-link rounded-0" href=""><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Topbar End -->
+
+
+    <!-- Navbar Start -->
+    <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top p-0">
+        <a href="#" class="navbar-brand d-flex align-items-center border-end px-4 px-lg-5">
+            <h2 class="m-0"><img src="{% static 'main/img/sheild.png' %}" style="width: 300px;" alt=""></h2>
+        </a>
+        <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto p-4 p-lg-0">
+                <a href="{% url 'user_dashboard' %}" class="nav-item nav-link ">Dashboard</a>
+                <a href="{% url 'user_applynewpass' %}" class="nav-item nav-link ">Apply New Pass</a>
+                <a href="{% url 'user_mypassdetails' %}" class="nav-item nav-link">My Pass Details</a>
+                <a href="{% url 'user_myprofile' %}" class="nav-item nav-link ">My Profile</a>
+                <a href="{% url 'user_feedback' %}" class="nav-item nav-link active">Feedback</a>
+                
+                    <a href="{% url 'main_home' %}" class="nav-link nav-link" >Logout</a>
+
+
+
+            </div>
+            <a href="" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Get Started<i
+                    class="fa fa-arrow-right ms-3"></i></a>
+        </div>
+    </nav>
+    <!-- Navbar End -->
+
+
+    <!-- Page Header Start -->
+    <div class="container-fluid page-header py-6 my-6 mt-0 wow fadeIn" data-wow-delay="0.1s">
+        <div class="container text-center">
+            <h1 class="display-4 text-white animated slideInDown mb-4">FeedBack</h1>
+            <nav aria-label="breadcrumb animated slideInDown">
+                <ol class="breadcrumb justify-content-center mb-0">
+                    <li class="breadcrumb-item"><a class="text-white" href="{% url 'user_dashboard' %}">Home</a></li>
+                    
+                    <li class="breadcrumb-item text-primary active" aria-current="page">FeedBack</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <!-- Page Header End -->
+
+
+    <!-- Courses Start -->
+    <center>
+        <div class="container">
+            {% if np %}
+       <div class="col-12 col-lg-7">
+            <p>Dear Customer,<br>
+                 Please spare some moments to give us your valuable feedback as it will help us in
+                improving our service.</p>
+                <h4>Please rate your service experience for the following parameters</h4>
+
+    <form method="post" action="" name="myform" onsubmit="return lion()" enctype="multipart/form-data">
+         {% csrf_token %}
+        <label>1. Your overall experience with us ?</label><br>
+
+        <span class="star-rating">
+            <input type="radio" name="rating1" value="1"><i></i>
+            <input type="radio" name="rating1" value="2"><i></i>
+            <input type="radio" name="rating1" value="3"><i></i>
+            <input type="radio" name="rating1" value="4"><i></i>
+            <input type="radio" name="rating1" value="5"><i></i>
+        </span>
+
+        <div class="clear"></div>
+        <hr class="survey-hr">
+        <label>2. Friendliness and courtesy shown to you while Traveling in the Bus</label><br>
+        <span class="star-rating">
+            <input type="radio" name="rating2" value="1"><i></i>
+            <input type="radio" name="rating2" value="2"><i></i>
+            <input type="radio" name="rating2" value="3"><i></i>
+            <input type="radio" name="rating2" value="4"><i></i>
+            <input type="radio" name="rating2" value="5"><i></i>
+        </span>
+        <hr class="survey-hr">
+        <label for="m_3189847521540640526commentText">4. Any Other suggestions:</label><br /><br />
+        <textarea cols="50" name="commentText" Id="suggestions" rows="5" ></textarea><br>
+        <br>
+        <div class="clear"></div>
+        <button style="background-color:#43a7d5;color:#fff;padding:12px;border:0;" type="submit" >Submit your review</button>
+        
+    </form>
+    {% else %}
+    <center>
+        <h1>You have not applied for bus pass, So you can't give a feedback.
+            Try again after apply
+        </h2>
+        </center>
+    {% endif %}
+    </div>
+    </div>
+    </center>
+
+
+    
+    
+    
+    <!-- Courses End -->
+
+
+    <!-- Footer Start -->
+    <div class="container-fluid bg-dark text-light footer my-6 mb-0 py-6 wow fadeIn" data-wow-delay="0.1s">
+        <div class="container">
+            <div class="row g-5">
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="text-white mb-4">Get In Touch</h4>
+                    <h2 class="text-primary mb-4"></h2>
+                    <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>#2nd Floor, Siris Rd, Near L.B Nagar Metro Station Pillar No A1662, Snehapuri Colony, Hyderabad, Telangana 500074</p>
+                    <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+91 8555 8879 86</p>
+                    <p class="mb-2"><i class="fa fa-envelope me-3"></i>info@codebook.in</p>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="text-white mb-4">Quick Links</h4>
+                    <a href="{% url 'user_dashboard' %}" class="btn btn-link">Dashboard</a>
+                    <a a href="{% url 'user_applynewpass' %}" class="btn btn-link ">Apply New Pass</a>
+                    <a href="{% url 'user_mypassdetails' %}" class="btn btn-link">My Pass Details</a>
+                    <a href="{% url 'user_myprofile' %}" class="btn btn-link ">My Profile</a>
+                    <a href="{% url 'user_feedback' %}" class="btn btn-link">Feedback</a>
+                    
+                        <a href="{% url 'main_home' %}" class="btn btn-link" >Logout</a>
+    
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="text-light mb-4">Popular Links</h4>
+                    <a href="{% url 'user_dashboard' %}" class="btn btn-link">Dashboard</a>
+                    <a a href="{% url 'user_applynewpass' %}" class="btn btn-link ">Apply New Pass</a>
+                    <a href="{% url 'user_mypassdetails' %}" class="btn btn-link">My Pass Details</a>
+                    <a href="{% url 'user_myprofile' %}" class="btn btn-link ">My Profile</a>
+                    <a href="{% url 'user_feedback' %}" class="btn btn-link">Feedback</a>
+                    
+                        <a href="{% url 'main_home' %}" class="btn btn-link" >Logout</a>
+    
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="text-light mb-4">Newsletter</h4>
+                    <form action="">
+                        <div class="input-group">
+                            <input type="text" class="form-control p-3 border-0" placeholder="Your Email Address">
+                            <button class="btn btn-primary">Sign Up</button>
+                        </div>
+                    </form>
+                    <h6 class="text-white mt-4 mb-3">Follow Us</h6>
+                    <div class="d-flex pt-2">
+                        <a class="btn btn-square btn-outline-light me-1" href=""><i class="fab fa-twitter"></i></a>
+                        <a class="btn btn-square btn-outline-light me-1" href=""><i class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-square btn-outline-light me-1" href=""><i class="fab fa-youtube"></i></a>
+                        <a class="btn btn-square btn-outline-light me-0" href=""><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+
+
+    <!-- Copyright Start -->
+    <div class="container-fluid copyright text-light py-4 wow fadeIn" data-wow-delay="0.1s">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                    &copy; <a href="https://www.codebook.in/" target="_blank">Codebook</a>, All Right Reserved.
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
+                    Designed By :<a href="http://fzinfotech.com/" target="_blank"> FZ!NFOTECH</a>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Copyright Start -->
+    {% if messages %}              
+    {% for message in messages %}
+       {% if message.level == DEFAULT_MESSAGE_LEVELS.WARNING %}
+                 <script>swal({
+                   title: "Warning!",
+                   text: "{{message}}",
+                   icon: "warning",
+                   button: "OK",
+                 });
+               </script>
+            
+             {% elif message.level == DEFAULT_MESSAGE_LEVELS.INFO %}
+                 <script>swal({
+                   title: "Info :)",
+                   text: "{{message}}",
+                   icon: "info",
+                   button: "OK",
+                 });
+       </script>
+       {% elif message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+       <script>swal({
+         title: "Error :)",
+         text: "{{message}}",
+         icon: "error",
+         button: "OK",
+       });
+       </script>
+       {% elif message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+       <script>swal({
+       title: "Success :)",
+       text: "{{message}}",
+       icon: "success",
+       button: "OK",
+       });
+       </script>
+             {% endif %}              
+           {% endfor %} 
+       {% endif %}
+    
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+
+
+    <!-- JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="{% static 'main/lib/wow/wow.min.js' %}"></script>
+    <script src="{% static 'main/lib/easing/easing.min.js' %}"></script>
+    <script src="{% static 'main/lib/waypoints/waypoints.min.js' %}"></script>
+    <script src="{% static 'main/lib/owlcarousel/owl.carousel.min.js' %}"></script>
+
+    <!-- Template Javascript -->
+    <script src="{% static 'main/js/main.js' %}"></script>
+</body>
+
+</html>
